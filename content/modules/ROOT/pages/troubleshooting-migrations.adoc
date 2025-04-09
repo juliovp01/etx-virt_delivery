@@ -1,30 +1,59 @@
 # Troubleshooting Migrations
 
-In this lab we have a VM that cannot be migrated because it's hitting a limitation of MTV. The purpose of the lab is for the student to reason about different approaches on how to solve the issue.
-This lab is optional, but differently from the other ones, it will not give you the solution to the problem.
-The troublesome machine is teh following: `ETX/student-[student_id]/some.troubles.here` and contains two issues that prevents migration.
-To verify that the machine has been migrated correctly, run this command from the machine:
+While there is a hope that every migration into OpenShift Virtualization is a smooth experience, there are situations where Migrations do not go as expected and challenges and/or failures can occur. With that in mind, this exercise is designed slightly different than the prior exercises as the end to end solution is not provided and you must use your troubleshooting skills to assess the situation and work through all failures until solutions are found. This exercise is optional, but affords you the opportunity to experience some of the challenges that you may face in the field.
 
-```sh
+== Migrating a Troublesome Virtual Machine
+
+A Virtual Machine has called `some.troubles.here` is available in the VMware environment and you are tasked with migrating it to OpenShift Virtualization. There are *two* issues that you will need to work through in order to complete the migration into OpenShift.
+
+By now, you should be an expert with the Ansible for OpenShift Virtualization Migration, so migrating another Virtual Machine with the tools should be second nature.
+
+Navigate to Ansible Automation Platform and locate the *OpenShift Virtualization Migration - Migrate - etx.redhat.com* _Job Template_ by selecting *Templates* underneath _Automation Execution_ section on the left hand navigation bar. Keep in mind that you may need to expand the number of _Job Templates_ that are visible to find the desired migration _Job Template_.
+
+Select the Rocket icon next to the `OpenShift Virtualization Migration - Migrate - etx.redhat.com` _Job Template_.
+
+image::Ansible-Migration-Troublesome/aap-job-templates-migrate.png[link=self, window=blank, width=100%]
+
+Enter the following into the _Variables_ textbox which defies the Virtual Machine (`some.troubles.here`) that should be migrated to OpenShift.
+
+[source,yaml]
+----
+mtv_migrate_migration_request:
+  mtv_namespace: vmexamples-automation
+  source: vmware-etx
+  source_namespace: openshift-mtv
+  destination_namespace: openshift-mtv
+  network_map: vmware-etx-host
+  network_map_namespace: vmexamples-automation
+  storage_map: vmware-etx-host
+  storage_map_namespace: vmexamples-automation
+  plan_name: etx-migration-trouble
+  start_migration: true
+  vms:
+    - path: /RS00/vm/ETX/student-<ID>/some.troubles.here
+----
+
+Be sure to replace `<ID>` with your individual student ID.
+
+Click *Next* to review the contents of the _Job_.
+
+image::Ansible-Migration-Troublesome/aap-job-templates-migrate-review.png[link=self, window=blank, width=100%]
+
+Once satisfied, click *Finish* to launch the Job Template.
+
+Track the output of the Ansible _Job_ and ensure that it completes successfully.
+
+Navigate to the OpenShift Web Console and view the generated `etx-migration-trouble` _Plan_ that the Ansible automation created by selecting *Plans* underneath the _Migration_ section of the left hand navigation bar.
+
+Inspect the status of the _Migration_ that was initiated and work through any failures until you are able to successfully migrate the Virtual Machine. Feel free to collaborate among fellow attendees to compare ideas and attempt solutions.
+
+== Verifying the Migration of a Troublesome Virtual Machine
+
+Once all of the issues for during the migration process for the Virtual Machine have been resolved, you can verify a successful migration by obtaining a session within the Virtual Machine and executing the following command:
+
+[source,shell]
+----
 curl localhost
-```
-you should see a simple "hello world" page as a response.
+----
 
-## Run the migration
-
-create the migration inventory as follows with the problematic VM:
-
-```yaml
-
-TODO  
-```
-
-Run the migration playbook with the following command:
-
-```sh 
-ansible-playbook -i inventory/hosts playbooks/run-migration.yml
-```
-
-the migration should fail.
-
-Understand the error message and try to solve the issue. Use your mates and the lab assistant to compare ideas and try solutions.
+If a response containing the HTML markup with the content `Hello World ETX OpenShift virtualization` is returned, the Virtual Machine was migrated successfully.
