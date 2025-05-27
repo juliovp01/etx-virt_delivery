@@ -17,4 +17,4 @@ CONSOLE_HOST=$(oc get route console -n openshift-console -o jsonpath='{.spec.hos
 [ $(oc get nodes | grep ' Ready' | wc -l) == 6 ] || bail NODES
 
 # NOTE: This can fail if pods are in the process of restarting for some reason
-[ $(oc get pods -A | grep -E -v '(NAMESPACE)|(Running)|(Completed)' | wc -l) == 0 ] || bail PODS
+[ $(oc get pods -A --no-headers | grep -E -v '(Running)|(Completed)' | wc -l) == 0 ] || bail PODS
