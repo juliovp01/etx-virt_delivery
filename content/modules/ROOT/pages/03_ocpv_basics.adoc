@@ -135,6 +135,8 @@ image::Create_VM_PVC/13_Fedora_Console.png[link=self, window=blank, width=100%]
 [TIP]
 If you are using a non US or International Keyboard in your system, you could change the virtual machine settings to match your system's keyboard layout. To do this, in your VM console type the following command: `sudo localectl set-keymap <lang>`. For example, for German, the command will be: `sudo localectl set-keymap <de>`. For a complete list of available keymaps, you can run the command `localectl list-keymaps`.
 +
+Unfortunately this will most likely break the copy/paste functionality for username and password in the VNC console: this will switch keyboard mapping. When passwords contain affected characters, they will be entered wrong. For example, a password like yyf8-khyi-bbgt will be entered as zzf8-khzi-bbgt with a german keymap. You can verify that easily when pasting the password to the login prompt, where it will be visible. The serial console is not affected.
++
 [IMPORTANT]
 You can click on `Paste` to paste the password after copying it.
 +
