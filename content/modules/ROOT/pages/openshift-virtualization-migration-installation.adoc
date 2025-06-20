@@ -337,7 +337,7 @@ link:https://gitlab.consulting.redhat.com/redhat-cop/openshift-virtualization-mi
 
 Throughout all of the configurations that have been defined thus far in the prior sections, one area that you might be wondering about is how Ansible connects to the OpenShift environment. Since the Ansible for OpenShift Virtualization Migration supports multiple deployment architectures, support is available for specifying the locations of the OpenShift environments as well as how to authenticate within the _Host Group_ for either the `migration_hub` or `migration_spoke` Inventory Group. Whether looking at the `inventory-etx-base.yml` or `inventory-etx.yml` Inventory file, you will notice the variable `openshift_verify_ssl` which allows for SSL verification errors to be ignored.
 
-At this location, you can specifying the address of the OpenShift API server using the `openshift_host` variable. Credentials can either be provided via Username/Password combination with the `openshift_username` and `openshift_password` variables or using an API Token. Either a long-lived token associated with a Service Account or a temporary API key, such as a token associated with a User, can be provided.
+At this location, you can specify the address of the OpenShift API server using the `openshift_host` variable. Credentials can either be provided via Username/Password combination with the `openshift_username` and `openshift_password` variables or using an API Token. Either a long-lived token associated with a Service Account or a temporary API key, such as a token associated with a User, can be provided.
 
 Since there is only 1 OpenShift cluster, we can provide the location of the OpenShift API server and the token of the currently authenticated user as _Extra Variables_.
 
@@ -385,7 +385,7 @@ ansible-navigator run \
   -e bootstrap_aap_license_manifest=$(pwd)/aap-manifest.zip
 ----
 
-The provisioning will take a few minutes to complete as OpenShift is populated with Ansible for OpenShift Virtualization Migration resources.
+The provisioning will take a few minutes to complete as OpenShift is populated with Ansible for OpenShift Virtualization Migration resources.  Re-run the the above `ansible-navigator run` command if you run into a `HTTP Error 503: Service Unavailable` during the `Apply license to AAP` Task.
 
 ## Verify the Provisioning
 

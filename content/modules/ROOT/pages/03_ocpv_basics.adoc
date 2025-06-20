@@ -37,7 +37,7 @@ Administrator login is available with:
 
 == Create a new Project
 
-Like other objects in OpenShift, Projects, which are an abstraction for Kubnernetes namespaces, are the boundaries for permissions and other aspects of using and manaing the resources. Creating a Project is an important first step for any deployment.
+Like other objects in OpenShift, Projects, which are an abstraction for Kubnernetes namespaces, are the boundaries for permissions and other aspects of using and maintaining the resources. Creating a Project is an important first step for any deployment.
 
 . Browse to *Virtualization* -> *VirtualMachines* using the left navigation menu:
 +
